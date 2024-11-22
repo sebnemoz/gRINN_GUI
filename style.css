@@ -1,0 +1,484 @@
+/* Color scheme */
+:root {
+
+  --yellow-green: #9ACD32;
+  --white: #FFFFFF;
+  --blue: #809bce; 
+  --pale_blue: #95b8d1; 
+  --green: #b8e0d2; 
+  --pale_green: #d6eadf; 
+  --pink: #eac4d5;
+
+  
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--green); /* Background color */
+  margin: 20px;
+  color: var(--blue);
+}
+
+h1 {
+  text-align: center;
+  color: #4B7F52;
+}
+
+h4 {
+  text-align: center;
+  color: #4B7F52;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #d6eadf; 
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+}
+.input-table:first-child {
+  width: 50%; /* Narrow the first table */
+}
+
+.vertical-separator {
+  width: 1px;
+  background-color: #809bce;
+  margin: 10 10px; /* Minimal space on each side of the separator */
+}
+
+.input-table:last-child {
+  width: 50%; /* Adjust the second table width */
+}
+
+
+input[type="text"], input[type="number"], select {
+  width: 185px; /* Adjust the width to allow space for the button */
+  box-sizing: border-box; /* Include padding and borders in width */
+  display: inline-block;
+  vertical-align: middle;
+  padding: 8px;
+  margin: 5px 0;
+  border-radius: 5px;
+  border: 1px solid #809bce;
+  background-color: #F0FFF0; /* HoneyDew */
+  color: black;
+  position: relative; /* Allows positioning of button if needed */
+}
+
+/* Input box text and button styles */
+input[type="file"] {
+  width: 185px; /* Adjust width */
+  box-sizing: border-box; /* Include padding and borders in width */
+  display: inline-block;
+  vertical-align: middle;
+  padding: 8px;
+  margin: 5px 0;
+  border-radius: 5px;
+  border: 1px solid #809bce;
+  background-color: #F0FFF0; /* HoneyDew */
+  color: transparent; /* Hides initial text */
+  position: relative;
+  cursor: pointer; /* Makes the input visually clickable */
+}
+
+/* Style for buttons within input boxes */
+input[type="file"]::file-selector-button, /* For file input buttons */
+button {
+  background-color: #809bce;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  margin-left: 5px; /* Adds a slight space between text and button */
+  border-radius: 3px;
+  cursor: pointer;
+  
+}
+
+/* Hover effect for buttons */
+input[type="file"]::file-selector-button:hover, button:hover {
+  background-color: #95b8d1;
+}
+
+
+
+/* Specific styling for smaller input boxes */
+input.source-target-input {
+  width: calc(80% - 30px); /* Adjust the width to allow space for the button */
+  display: inline-block;
+  vertical-align: middle;
+}
+
+
+input[type="checkbox"] {
+  margin-left: 10px;
+}
+
+button[type="submit"], button[type="button"] {
+  background-color: #809bce;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 150px;
+}
+
+button[type="submit"]:hover, button[type="button"]:hover {
+  background-color: #95b8d1; 
+}
+/* Modal container */
+#customAlert {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Dimmed overlay */
+  justify-content: center;
+  align-items: center;
+}
+
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000; /* Increased to ensure it appears in front */
+  padding-top: 60px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent; 
+}
+
+.modal-content {
+  color: #809bce;
+  background-color: #d6eadf;
+  margin: auto;
+  padding: 20px;
+  border-radius: 8px;
+  border: 2px solid #eac4d5;
+  width: 50%;
+}
+
+/* Close button styling */
+#closeModal {
+  float: right;
+  color: white;
+  font-size:28px;
+  cursor: pointer;
+  font-weight:bold;
+  
+}
+
+#closeModal:hover {
+  color: #eac4d5; /* Change to your desired hover color */
+  transform: scale(1.1); /* Optional: makes the close icon slightly larger on hover */
+}
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #eac4d5;
+  cursor: pointer;
+}
+
+/* Style for the container holding input and info button */
+.input-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; /* Adjust as needed */
+}
+
+/* styling for the small round info buttons */
+button.info-button {
+  background-color: #809bce;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  border: 1px solid white;
+  font-family: 'Times New Roman', serif; 
+  font-size: 16px;
+  font-weight: bolder;
+  color: white;
+  cursor: pointer;
+  margin-left: 5px;
+
+  /* Centering the 'i' */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  line-height: 1;
+}
+
+
+.info-button:hover {
+  background-color: #95b8d1;
+}
+
+/* The switch - the container for the input and the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+/* Hide the default checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #95b8d1;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+/* Rounded slider (inside the toggle) */
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 4px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+/* When the checkbox is checked */
+input:checked + .slider {
+  background-color: #eac4d5;
+}
+
+/* Move the slider when checked */
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+
+button.submit-button {
+  background-color: #809bce; 
+  color: white;
+  border: none;
+  padding: 10px 1px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  max-height: 50px;
+}
+  
+.submit-button:hover {
+  background-color: #95b8d1; 
+}
+
+
+button.alert-button {
+  background-color: #809bce; 
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 150px;
+}
+  
+.alert-button:hover {
+  background-color: #95b8d1; 
+}
+
+
+logOutput {
+  font-family: monospace;
+  background-color: #F0FFF0;
+  border-radius: 5px;
+  padding: 1px;
+  height: 50px;
+  overflow-y: auto;
+  white-space: pre-wrap; /* Preserve whitespace and line breaks */
+}
+
+/* Style for the log container */
+.log-container {
+  border: 2px solid #809bce; 
+  border-radius: 5px;
+  background-color: #F0FFF0;
+  padding: 10px;
+  height: 50px;
+  overflow-y: auto;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  color: #333; /* Text color */
+  font-family: Arial, sans-serif;
+  font-size: 0.9em;
+}
+
+/* Style for individual log entries */
+.log-entry {
+  padding: 5px;
+  margin: 3px 0;
+  border-left: 3px solid #b8e0d2; /* Green accent line */
+  background-color: #d6eadf; /* Light green background */
+  font-style: italic;
+}
+
+output {
+  margin-top: 20px;
+}
+
+/* Custom Tooltip Style */
+button[data-tooltip] {
+  position: relative;
+}
+
+/* Tooltip Styling */
+button[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: -30px; /* Adjust to position above button */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+.ff-container {
+  display: flex;
+  gap: 8px;
+}
+
+#ffFolder,
+#customForceFieldName {
+  width: 100%;
+}
+
+.custom-active #ffFolder,
+.custom-active #customForceFieldName {
+  width: 100%;
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;  /* Aligns the content horizontally in the center */
+  align-items: center;      /* Aligns the content vertically in the center */
+  text-align: center;       /* Ensures text is aligned to the center */
+}
+
+.image {
+  margin-right: 2em;  /* Optional, to add space between image and text */
+}
+
+.text {
+  font-size: 2rem;  /* Optional, adjust font size for h1 */
+  margin: 10px;        /* Removes default margin from h1 */
+}
+
+#gmxrcTd {
+  white-space: nowrap; /* Prevents wrapping of content within the cell */
+}
+
+#gmxrcPath {
+    display: inline-block;
+    line-height: normal; /* Resets line height to prevent extra height */
+    box-sizing: border-box;
+    width: 185px; /* Constrain button width within the table */
+    white-space: nowrap; /* Prevents the text from wrapping */
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #809bce;
+    
+}
+
+#browseGmxrcPath {
+    display: inline-block;
+    /*padding: 4px 10px; /* Adjust padding to match the height of input */
+    line-height: normal; /* Resets line height to prevent extra height */
+    box-sizing: border-box;
+    width: 130px; /* Constrain button width within the table */
+    white-space: nowrap; /* Prevents the text from wrapping */
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #809bce;
+}
+
+#selectTopparFolder, #selectOutputFolder, #selectMdpFilesFolder {
+  display: inline-block;
+  /*padding: 4px 10px; /* Adjust padding to match the height of input */
+  line-height: normal; /* Resets line height to prevent extra height */
+  box-sizing: border-box;
+  width: 185px; /* Constrain button width within the table */
+  white-space: nowrap; /* Prevents the text from wrapping */
+  margin: 5px 0;
+  border-radius: 5px;
+  border: 1px solid #809bce;
+}
+#nt, #initPairFilterCutoff, #sourceSel, #targetSel {
+  display: inline-block;
+  line-height: normal; /* Resets line height to prevent extra height */
+  box-sizing: border-box;
+  width: 185px; /* Constrain button width within the table */
+  white-space: nowrap; /* Prevents the text from wrapping */
+  margin: 5px 0;
+  border-radius: 5px;
+  border: 1px solid #809bce;
+}
+
+#ffFolder {
+  display: inline-block;
+  line-height: normal; /* Resets line height to prevent extra height */
+  box-sizing: border-box;
+  width: 185px; /* Constrain button width within the table */
+  white-space: nowrap; /* Prevents the text from wrapping */
+  margin: 5px 0;
+  border-radius: 5px;
+  border: 1px solid #809bce;
+}
+
+label {
+  display: block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* Vertical separator styling */
+.input-table + .input-table {
+  border-left: 2px solid #809bce; /* Adds a vertical line between tables */
+  padding-left: 5px; /* Optional: space after the line */
+}
+
+
+

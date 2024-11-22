@@ -1,0 +1,29 @@
+title                    = NVT equilibration
+define                   = -DPOSRES      ; Position restraint
+integrator               = md            ; Molecular dynamics integrator
+dt                       = 0.002         ; 2 fs time step
+nsteps                   = 50000         ; 100 ps
+nstxout                  = 1000          ; Save coordinates every 1 ps
+nstvout                  = 1000          ; Save velocities every 1 ps
+nstenergy                = 1000          ; Save energies every 1 ps
+nstlog                   = 1000          ; Update log file every 1 ps
+
+; Temperature coupling is on
+tcoupl                   = V-rescale     ; Modified Berendsen thermostat
+tc-grps                  = System        ; Coupling all atoms as a single group
+tau_t                    = 0.1           ; Time constant for coupling
+ref_t                    = 300           ; Reference temperature in Kelvin
+
+; Pressure coupling is off
+pcoupl                   = no            ; No pressure coupling for NVT
+
+; Output control
+nstxout-compressed        = 1000          ; Write compressed coordinates every 1 ps
+
+; Bond parameters
+continuation             = no            ; First dynamics run
+constraint_algorithm     = lincs         ; Constraints algorithm
+constraints              = all-bonds     ; Constrain all bonds
+lincs_iter               = 1             ; Number of iterations in LINCS
+lincs_order              = 4             ; Order of the expansion in the LINCS algorithm
+

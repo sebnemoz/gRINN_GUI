@@ -1,0 +1,14 @@
+; Preprocessing options
+define = -DFLEXIBLE
+
+; Run parameters
+integrator  = steep       ; Algorithm (steepest descent)
+nsteps      = 5000        ; Maximum number of (minimization) steps
+nstlist     = 1           ; Frequency to update the neighbor list
+cutoff-scheme = verlet     ; Use Verlet cutoff scheme
+rlist       = 1.0         ; Distance (in nm) to search for neighbors
+
+; Energy minimizing
+emtol       = 1000.0      ; Stop minimization when the energy change is less than this
+emstep      = 0.01        ; Energy minimization step size
+

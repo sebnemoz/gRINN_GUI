@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="demo_style.css">
+  <title>gRINN Workflow</title>
+</head>
+<body>
+  <div class="center-container">
+    <img src="images/clover-6.png">
+    <h1 class="text">  gRINN</h1>
+</div>
+
+  <h4>Get Residue Interaction Energies and Networks</h4>
+  <form id="workflowForm">
+    <div class="container">
+      <!-- GROMACS-related inputs -->
+      <div class="container">
+        <div class="input-table"> 
+      <table class="input-table">
+        <tr>
+          <td><label for="pdbFile" title="Select a protein structure file with .pdb extension">PDB File:</label></td>
+          
+          <td><input type="text" id="pdbFilePath" value="demo/3HTB.pdb" readonly></td>
+        </tr>
+        <tr>
+          <td><label for="nofixpdb" title="pdb is not fixed when switched on">Do not fix PDB:</label></td>
+          <td>
+            <label class="switch" title="pdb is not fixed when switched on">
+              <input type="checkbox" id="nofixpdb">
+              <span class="slider"></span>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td><label for="sourceSel">Source Selection:</label></td>
+          <td>
+            <div class="input-container">
+            <input type="text" id="sourceSel" class="source-target-input" value="all">
+            <button type="button" class="info-button" onclick="openModal('sourceModal')">i</button>
+          </div>
+          </td>
+        </tr>
+        <tr>
+          <td><label for="targetSel">Target Selection:</label></td>
+          <td>
+            <div class="input-container">
+            <input type="text" id="targetSel" class="source-target-input" value="all">
+            <button type="button" class="info-button" onclick="openModal('targetModal')">i</button>
+          </div>
+          </td>
+        </tr>
+        <tr>
+          <td><label for="mdpFilesFolder" title="Specify the folder which contains mdp files">MDP Files Folder:</label></td>
+          <td>
+            <input type="text" id="mdpFolderPath" value="demo/mdp" readonly>
+              <div id="mdpOutput"></div> <!-- This will display the selected folder path -->
+          </td>
+        </tr>
+        <tr>
+          <td><label for="outFolder" title="Specify an empty folder for Grinn outputs">Output Folder:</label></td>
+          <td><button type="button" class="submit-button" id="selectOutputFolder" title="Specify an empty folder for Grinn outputs">Select Output Folder</button><div id="output"></div></td>
+        </tr>
+        <tr>
+          <td><label for="initPairFilterCutoff" title="The distance cutoff for initial filtering">Initial Pair Filter Cutoff:</label></td>
+          <td><input type="number" id="initPairFilterCutoff" value="10" step="1" title="The distance cutoff for initial filtering"></td>
+        </tr>
+        <tr>
+          <td><label for="lig" title="Toggle ligand mode">Ligand Mode:</label></td>
+          <td>
+            <label class="switch" title="Toggle ligand mode">
+              <input type="checkbox" id="lig">
+              <span class="slider"></span>
+            </label>
+          </td>
+        </tr>
+        <tr id="ligGroRow" style="display: none;">
+          <td><label for="ligGroFile" title="Select the .gro file for your ligand">Ligand GRO File:</label></td>
+          <td><input type="text" id="ligGroPath" value="demo/jz4.gro" readonly></td>
+        </tr>
+        <tr id="ligItpRow" style="display: none;">
+          <td><label for="ligItpFile" title="Select the .itp file for your ligand">Ligand ITP File:</label></td>
+          <td><input type="text" id="ligItpPath" value="demo/jz4.itp" readonly></td>
+        </tr>
+      </table>
+    </div>
+
+      <!-- Additional inputs -->
+      <div class="input-table">
+      <table class="input-table">        
+        <tr> <div style="display: flex; align-items: center;">
+          <td><label for="gmxrcPath" title="Either use default or specify path to Gromacs executable">GMX Path:</label></td>
+          <td id="gmxrcTd">
+            <input type="text" id="gmxrcPath" value="/usr/local/gromacs/bin/GMXRC">
+            <button type="button" id="browseGmxrcPath" title="Either use default or specify path to Gromacs executable">Browse GMX</button>
+          </td></div>
+      </tr>
+      <tr>
+        <td><label for="ffFolder" title="Select a force field or choose custom to specify a folder">Force Field:</label></td>
+        <td>
+          <div class="ff-container">
+          <select id="ffFolder" title="Select a force field or choose custom to specify a folder">
+            <option value="amber03">amber03</option>
+            <option value="amber94">amber94</option>
+            <option value="amber96">amber96</option>
+            <option value="amber99">amber99</option>
+            <option value="amber99sb">amber99sb</option>
+            <option value="amber99sb-ildn" selected>amber99sb-ildn</option>
+            <option value="amberGS">amberGS</option>
+            <option value="charmm27">charmm27</option>
+            <option value="gromos43a1">gromos43a1</option>
+            <option value="gromos43a2">gromos43a2</option>
+            <option value="gromos45a3">gromos45a3</option>
+            <option value="gromos53a5">gromos53a5</option>
+            <option value="gromos53a6">gromos53a6</option>
+            <option value="gromos54a7">gromos54a7</option>
+            <option value="oplsaa">oplsaa</option>
+            <option value="custom">Custom (Specify folder)</option>
+          </select>
+          
+            <input type="text" id="customForceFieldName" title="Enter the name of custom forcefield" style="display: none;">
+          </div>
+          
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="solvate" title="Molecule is solvated when switched on">Solvate:</label></td>
+        <td>
+          <label class="switch" title="Molecule is solvated when switched on">
+            <input type="checkbox" id="solvate">
+            <span class="slider"></span>
+          </label>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="npt" title="Simulation is run with npt when switched on">NPT Equilibration:</label></td>
+        <td>
+          <label class="switch" title="Simulation is run with npt when switched on">
+            <input type="checkbox" id="npt">
+            <span class="slider"></span>
+          </label>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="nt" title="Specify the number of threads to be used for this process">Number of threads:</label></td>
+        <td><input type="number" id="nt" name="nt" min="1" value="4" title="Specify the number of threads to be used for this process"></td>
+      </tr>
+      <tr>
+        <td><label for="existing" title="Existing Gromacs Data">Existing Gromacs Data:</label></td>
+        <td>
+          <label class="switch" title="Existing Gromacs MDS Data">
+            <input type="checkbox" id="existing">
+            <span class="slider"></span>
+          </label>
+        </td>
+      </tr>
+      
+      <tr id="topRow" style="display: none;">
+          <td><label for="top">Topology File:</label></td>
+          <td><input type="file" id="top" accept=".top"></td>
+        </tr>
+        
+        <tr id="trajRow" style="display: none;">
+          <td><label for="traj">Trajectory File:</label></td>
+          <td><input type="file" id="traj" accept=".xtc, .trr"></td>
+        </tr>
+        <tr id="topparRow" style="display: none;">
+          <td><label for="toppar">Toppar Folder:</label></td>
+          <td><button type="button" class="submit-button" id="selectTopparFolder">Select Toppar Files Folder</button>
+          <div id="topparOutput"></div> <!-- This will display the selected folder path --></td>
+        </tr>
+        <tr id="includeFilesRow" style="display: none;">
+          <td><label for="includeFiles">Include Files:</label></td>
+          <td><input type="file" id="includeFiles"></td>
+          <!--<td><button type="button" class="submit-button" id="selectIncludeFiles">Select Folder</button><div id="includeOutput"></div></td>-->
+        </tr>
+        <tr style="display: none;">
+        <td><label for="noconsoleHandler">No Console Handler:</label></td>
+        <td><input type="checkbox" id="noconsoleHandler"></td>
+      </tr>
+      </table></div>
+    </div>
+    </div>
+
+    <div class="button-container">
+      <button type="submit" data-tooltip="Click to submit your data">Run gRINN Demo</button>
+      <button type="button" id="resultsButton" data-tooltip="View results">Results</button>
+      <button type="button" id="clearButton" data-tooltip="Clear inputs">Reset</button>
+      <!--<button type="button" id="demoButton" data-tooltip="Run a demo">Demo</button>-->
+      <button type="button" id="helpButton" data-tooltip="View tutorial">Tutorial</button>
+      <button type="button" id="creditsButton" data-tooltip="View credits">Credits</button>
+      <button type="button" id="backButton">Back</button>
+    </div>
+<br><br>
+    <div id="logOutput" class="log-container">
+      <!-- Log messages will appear here -->
+    </div>
+  </form>
+
+  <!-- Modal for Source Selection -->
+  <div id="sourceModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('sourceModal')">&times;</span>
+      <h3>Source Selection Input Format</h3>
+      <p><strong>String Input:</strong> Specify atoms, residues, chains, or other criteria. Example formats:</p>
+      <ul>
+        <li>"resid 10 to 20" - selects residues 10 through 20.</li>
+        <li>"chain A" - selects all atoms or residues in chain A.</li>
+        <li>"name CA" - selects only alpha-carbon atoms.</li>
+      </ul>
+      <p><strong>List Input:</strong> Provide a list, such as:</p>
+      <ul>
+        <li>[10, 20, 30] - selects residues with IDs 10, 20, and 30.</li>
+      </ul>
+    </div>
+  </div>
+
+   <!-- Modal for Target Selection -->
+   <div id="targetModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('targetModal')">&times;</span>
+      <h3>Target Selection Input Format</h3>
+      <p><strong>String Input:</strong> Specify atoms, residues, chains, or other criteria. Example formats:</p>
+      <ul>
+        <li>"resid 10 to 20" - selects residues 10 through 20.</li>
+        <li>"chain B" - selects all atoms or residues in chain B.</li>
+        <li>"name N" - selects only nitrogen atoms.</li>
+      </ul>
+      <p><strong>List Input:</strong> Provide a list, such as:</p>
+      <ul>
+        <li>[5, 15, 25] - selects residues with IDs 5, 15, and 25.</li>
+      </ul>
+    </div>
+  </div>
+  <!--Modal for alert boxes-->
+  <!-- Custom Modal -->
+<div id="customAlert" class="modal" style="display: none;">
+  <div class="modal-content">
+      <span class="close-btn" id="closeModal">&times;</span>
+      <p id="modalMessage"></p>
+      <button class="alert-button" id="confirmBtn">OK</button>
+  </div>
+</div>
+
+  </div> <script src="demo_renderer.js"></script> </body> </html>

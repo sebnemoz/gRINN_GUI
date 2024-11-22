@@ -1,0 +1,64 @@
+; NPT equilibration parameters
+
+; Run parameters
+integrator               = md                    ; Leap-frog integrator
+nsteps                   = 50000                 ; 50 ps
+dt                       = 0.001                 ; 1 fs time step
+
+; Output control
+nstxout                  = 1000                  ; Save coordinates every 1 ps
+nstvout                  = 1000                  ; Save velocities every 1 ps
+nstenergy                = 1000                  ; Save energies every 1 ps
+nstlog                   = 1000                  ; Update log file every 1 ps
+nstxout-compressed       = 500                   ; Write .xtc trajectory every 0.5 ps
+
+; Bond parameters
+continuation             = yes                   ; Restarting after NVT
+constraint_algorithm     = lincs                 ; Algorithm for bond constraints
+constraints              = h-bonds               ; Only constrain bonds involving H atoms
+lincs_iter               = 1                     ; Number of iterations for LINCS
+lincs_order              = 4                     ; Order of expansion
+
+; Neighbor searching
+cutoff-scheme            = Verlet                ; Buffered neighbor searching
+ns_type                  = grid                  ; Search grid
+nstlist                  = 10                    ; Update neighbor list every 10 steps
+rlist                    = 1.0                   ; Cutoff for short-range neighbor list (in nm)
+
+; Electrostatics
+coulombtype              = PME                   ; Use Particle Mesh Ewald for long-range electrostatics
+rcoulomb                 = 1.0                   ; Short-range electrostatic cutoff (in nm)
+
+; van der Waals
+vdwtype                  = cutoff                ; Cutoff for Van der Waals interactions
+rvdw                     = 1.0                   ; Short-range Van der Waals cutoff (in nm)
+
+; Temperature coupling is on
+tcoupl                   = V-rescale             ; Modified Berendsen thermostat
+tc-grps                  = Protein Non-Protein   ; Two coupling groups: Protein and non-protein
+tau_t                    = 0.1   0.1             ; Time constant for temperature coupling (in ps)
+ref_t                    = 300   300             ; Reference temperature for each group (in K)
+
+; Pressure coupling is on
+pcoupl                   = Parrinello-Rahman     ; Parrinello-Rahman for NPT
+pcoupltype               = isotropic             ; Isotropic pressure coupling
+tau_p                    = 2.0                   ; Time constant for pressure coupling (in ps)
+ref_p                    = 1.0                   ; Reference pressure (in bar)
+compressibility          = 4.5e-5                ; Water compressibility
+
+; Periodic boundary conditions
+pbc                      = xyz                   ; 3D periodic boundary conditions
+
+; Dispersion correction
+DispCorr                 = EnerPres              ; Dispersion correction for energy and pressure
+
+; Velocity generation
+gen_vel                  = no                    ; Do not generate new velocities
+
+; Removing center of mass motion
+nstcomm                  = 100                   ; Remove COM motion every 100 steps
+comm-mode                = Linear
+comm-grps                = System
+
+; Refcoord scaling to avoid artifacts with position restraints and pressure coupling
+refcoord_scaling         = com                   ; Scale reference coordinates with center of mass motion

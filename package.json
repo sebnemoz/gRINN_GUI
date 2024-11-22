@@ -1,0 +1,145 @@
+{
+  "name": "grinn",
+  "version": "1.0.0",
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "name": "gRinnGui",
+        "asar": true,
+        "osxSign": {},
+        "appCategoryType": "public.app-category.developer-tools"
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": ["darwin", "linux"]
+        },
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "iconUrl": "./images/icon.ico",
+            "setupIcon": "./images/icon.ico"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {
+            "options": {
+              "icon": "./images/icon.png"
+            }
+          }
+        },
+        {
+          "name": "@electron-forge/maker-dmg",
+          "config": {
+            "icon": "./images/icon.icns"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-wix",
+          "config": {
+            "icon": "./images/icon.ico"
+          }
+        }
+      ],
+      "publishers": [
+        {
+          "name": "@electron-forge/publisher-github",
+          "config": {
+            "repository": {
+              "owner": "sebnemoz",
+              "name": "gRINN_GUI"
+            },
+            "prerelease": false,
+            "draft": true,
+            "generateReleaseNotes": true,
+            
+          }
+        }
+      ],
+      "plugins": [
+        {
+          "name": "@electron-forge/plugin-webpack",
+          "config": {
+            "mainConfig": "./webpack.main.config.js",
+            "renderer": {
+              "config": "./webpack.renderer.config.js",
+              "entryPoints": [
+                {
+                  "html": "./index.html",
+                  "js": "./renderer.js",
+                  "name": "main_window"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  "main": "main.js",
+  "scripts": {
+    "electron": "electron .",
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish"
+  },
+  "keywords": [],
+  "author": "Onur Sercinoglu, Sebnem Ozturk",
+  "license": "ISC",
+  "description": "Get Residue Interaction Energies and Networks",
+  "dependencies": {
+    "node-fetch": "^3.3.2",
+    "open": "^10.1.0",
+    "systeminformation": "^5.23.5"
+  },
+  "build": {
+    "files": [
+      "./main.js",
+      "./renderer.js",
+      "./demo",
+      "./python",
+      "./images",
+      "./node_modules",
+      "./child_renderer.js",
+      "./child_style.css",
+      "./credits.html",
+      "./demo_renderer.js",
+      "./demo_style.css",
+      "./demo.html",
+      "./help.html",
+      "./index.html",
+      "./package-lock.json",
+      "./package.json",
+      "./preload.js",
+      "./style.css",
+      "./webpack.main.config.js",
+      "./webpack.renderer.config.js",
+      {
+        "from": "./conda_env",
+        "to": "./conda_env"
+      }
+    ],
+    "extraResources": [
+      {
+        "from": "./grinn-env",
+        "to": "grinn-env"
+      }
+    ]
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^7.5.0",
+    "@electron-forge/maker-zip": "^7.5.0",
+    "@electron-forge/maker-squirrel": "^7.5.0",
+    "@electron-forge/maker-deb": "^7.5.0",
+    "@electron-forge/maker-dmg": "^7.5.0",
+    "@electron-forge/maker-wix": "^7.5.0",
+    "@electron-forge/plugin-webpack": "^7.5.0",
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1",
+    "electron": "^31.2.0"
+  }
+}
+

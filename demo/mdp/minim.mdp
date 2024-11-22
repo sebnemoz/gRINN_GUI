@@ -1,0 +1,22 @@
+; Parameters for energy minimization
+integrator  = steep        ; Algorithm (steepest descent minimization)
+emtol       = 1000.0       ; Stop minimization when the maximum force < 1000.0 kJ/mol/nm
+emstep      = 0.01         ; Step size during minimization
+nsteps      = 50000        ; Maximum number of steps to perform
+
+; Parameters for output control
+nstenergy   = 10           ; Write energies to disk every 10 steps
+energygrps  = System       ; Which energy groups to write to disk
+
+; Neighbor searching
+cutoff-scheme   = Verlet   ; Use Verlet lists
+nstlist         = 1        ; Frequency to update the neighbor list
+rlist           = 1.0      ; Cut-off distance for the short-range neighbor list
+rcoulomb        = 1.0      ; Short-range electrostatic cut-off
+rvdw            = 1.0      ; Short-range Van der Waals cut-off
+
+; Electrostatics
+coulombtype     = PME      ; Particle Mesh Ewald for long-range electrostatics
+pme_order       = 4        ; Cubic interpolation
+fourierspacing  = 0.16     ; Grid spacing for FFT
+
